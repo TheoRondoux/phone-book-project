@@ -8,22 +8,26 @@ public class Person {
 	private String lastname;
 	private String firstname;
 	private String nickname;
-	private String phone_number;
+	private String phoneNumber;
 	private String address;
-	private String email_address;
-	private LocalDate birth_date;
+	private String emailAddress;
+	private LocalDate birthDate;
 	
-	public Person(Integer id, String lastname, String firstname, String nickname, String phone_number, String address,
-			String email_address, LocalDate birth_date) {
+	public Person() {
+		
+	}
+	
+	public Person(Integer id, String lastname, String firstname, String nickname, String phoneNumber, String address,
+			String emailAddress, LocalDate birthDate) {
 		super();
 		this.id = id;
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.nickname = nickname;
-		this.phone_number = phone_number;
+		this.phoneNumber = phoneNumber;
 		this.address = address;
-		this.email_address = email_address;
-		this.birth_date = birth_date;
+		this.emailAddress = emailAddress;
+		this.birthDate = birthDate;
 	}
 
 	public Integer getId() {
@@ -58,12 +62,12 @@ public class Person {
 		this.nickname = nickname;
 	}
 
-	public String getPhone_number() {
-		return phone_number;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getAddress() {
@@ -74,20 +78,20 @@ public class Person {
 		this.address = address;
 	}
 
-	public String getEmail_address() {
-		return email_address;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setEmail_address(String email_address) {
-		this.email_address = email_address;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
-	public LocalDate getBirth_date() {
-		return birth_date;
+	public LocalDate getBirthDate() {
+		return birthDate;
 	}
 
-	public void setBirth_date(LocalDate birth_date) {
-		this.birth_date = birth_date;
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
 	}
 	
 	
