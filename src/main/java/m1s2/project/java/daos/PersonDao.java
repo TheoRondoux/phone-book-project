@@ -14,7 +14,7 @@ public class PersonDao {
 		List<Person> personsList = new ArrayList<>();
 		try(Connection connection = DataSourceFactory.getDataSource().getConnection()){
 			try (Statement statement = connection.createStatement()){
-				String sqlQuery = "SELECT * FROM person";
+				String sqlQuery = "SELECT * FROM person ORDER BY lastname";
 				try (ResultSet results = statement.executeQuery(sqlQuery)){
 					while(results.next()) {
 						Person person = new Person(results.getInt("idperson"),
