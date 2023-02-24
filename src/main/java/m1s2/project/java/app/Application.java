@@ -90,15 +90,15 @@ public class Application {
 		String details = "\n//////////////////////\n//     Contacts     //\n//////////////////////\n"
 					   + "Page " + (pageCounter+1) + "/" + numberOfPages;		
 		System.out.println(details);
-		List<Person> contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);		
+		List<Person> contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);;
+		String options = generatePageOptions(numberOfPages, pageCounter);
 		while (choice == null || choice != 'B') {
-			choice = null;
-			String options = generatePageOptions(numberOfPages, pageCounter);
-			System.out.println(options);
 			while( choice == null || ( choice != 'B' && choice != '>' && choice != '<'  && choice < '1' && choice > (char)contactsOnPage.size()) ) {
 				if (choice != null ) {
-					System.out.println("Please enter a valid option");
+					System.out.println("\nPlease enter a valid option or choose a contact");
+					contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);
 				}
+				System.out.println(options);
 				choice = getOption();
 			}
 			
@@ -108,6 +108,7 @@ public class Application {
 						pageCounter--;
 						System.out.println("\nPage " + (pageCounter+1) + "/" + numberOfPages);
 						contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);
+						options = generatePageOptions(numberOfPages, pageCounter);
 					}
 					break;
 				case '>':
@@ -115,16 +116,25 @@ public class Application {
 						pageCounter++;
 						System.out.println("\nPage " + (pageCounter+1) + "/" + numberOfPages);
 						contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);
+						options = generatePageOptions(numberOfPages, pageCounter);
 					}
 					break;
 				case 'B':
 					break;
 				default:
-					showInfoContactMenu(contactsOnPage.get((int)choice-49));
-					contacts = personDao.listPersons();
-					System.out.println("\n//////////////////////\n//     Contacts     //\n//////////////////////\n" + "Page " + (pageCounter+1) + "/" + numberOfPages);
-					contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);
+					try{
+						showInfoContactMenu(contactsOnPage.get((int)choice-49), personDao);
+						contacts = personDao.listPersons();
+						System.out.println("\n//////////////////////\n//     Contacts     //\n//////////////////////\n" + "Page " + (pageCounter+1) + "/" + numberOfPages);
+						contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);
+					}
+					catch (IndexOutOfBoundsException e) {
+						choice = '0';
+					}
 					break;
+			}
+			if (choice != 'B' && choice != '0') {
+				choice = null;
 			}
 		}
 		showMainMenu();
@@ -141,10 +151,11 @@ public class Application {
 		int counter = 0;
 		System.out.println("----------------------");
 		if (contacts.size() <= limitPerPage) {
-			contacts.forEach((person)->{
-										System.out.println(person.getLastname() + " " + person.getFirstname());
-										contactsOnPage.add(person);
-									   });
+			for (int i=0; i < contacts.size(); i++) {
+				counter++;
+				System.out.println(counter + " - " + contacts.get(i).getLastname() + " " + contacts.get(i).getFirstname());
+				contactsOnPage.add(contacts.get(i));	
+			}
 		}
 		else {
 			if ( contacts.size() <= (pageCounter * limitPerPage + limitPerPage) ) {
@@ -216,7 +227,7 @@ public class Application {
 	public static String askForStringInput(String parameter) {
 		System.out.print(parameter+": ");
 		Scanner keyboard = new Scanner(System.in);
-		String input = keyboard.next();
+		String input = keyboard.nextLine();
 		
 		return input;
 	}
@@ -344,7 +355,7 @@ public class Application {
 		
 	}
 	
-	public static void showInfoContactMenu(Person person) {
+	public static void showInfoContactMenu(Person person, PersonDao personDao) {
 		System.out.println("\n//////////////////////\n//     Details      //\n//////////////////////");
 		person.displayInfos();
 		System.out.println("[E]dit\n[B]ack to contacts list");
@@ -358,15 +369,70 @@ public class Application {
 		
 		switch(choice) {
 			case 'E':
-				showEditContactMenu(person);
+				showEditContactMenu(person, personDao);
 				break;
 			case 'B':
 				break;
 		}
 	}
 	
-	public static void showEditContactMenu(Person person) {
-		System.out.println("Edit");
+	public static void showEditContactMenu(Person person, PersonDao personDao) {
+		Character choice = null;
+		System.out.println("\n//////////////////////\n//     Edition      //\n//////////////////////\n" + person.getFirstname() + " " + person.getLastname() + "\n");
+		while (choice == null || choice != 'B') {
+			System.out.println("Choose an element to modify:\n[F]irstname\n[L]astname\n[N]ickname\nBirth [D]ate\n[P]hone number\n[A]ddress\n[E]mail address\n\nOr go [B]ack to the list");
+			while (choice == null || (choice != 'F' && choice != 'L' && choice != 'N' && choice != 'D' && choice != 'P' && choice != 'A' && choice != 'E' && choice != 'B') ) {
+				if (choice != null) {
+					System.out.println("Please enter a valid option.");
+				}
+				choice = getOption();
+			}
+			
+			switch(choice){
+				case 'F':
+					person.setFirstname(askForStringInput("Firstname"));
+					break;
+				case 'L': 
+					person.setLastname(askForStringInput("Lastname"));
+					break;
+				case 'N': 
+					person.setNickname(askForStringInput("Nickname"));
+					break;
+				case 'D': 
+					person.setBirthDate(LocalDate.of(askForDateInt("Year of birth between (1900 and " + Year.now().getValue() + ")", "year"), askForDateInt("Month of birth (between 1 and 12)", "month"), askForDateInt("Day of birth (between 1 and 31)", "day")));
+					break;
+				case 'P': 
+					person.setPhoneNumber(askForStringInput("Phone number"));
+					break;
+				case 'A': 
+					person.setAddress(askForStringInput("Address"));
+					break;
+				case 'E': 
+					person.setEmailAddress(askForStringInput("Email"));
+					break;
+				case 'B':
+					break;
+			}
+			if (choice != 'B') {
+				personDao.editPerson(person);
+				checkContactEdition(person, personDao);
+				person.displayInfos();
+				choice = null;
+			}
+		}
+	}
+	
+	public static void checkContactEdition(Person personInfo, PersonDao personDao) {
+		List<Person> tempContacts = personDao.listPersons();
+		for (Person contact : tempContacts) {
+			if (contact.getId().equals(personInfo.getId()) && contact.getAddress().equals(personInfo.getAddress()) && contact.getBirthDate().equals(personInfo.getBirthDate()) 
+				&& contact.getEmailAddress().equals(personInfo.getEmailAddress()) && contact.getFirstname().equals(personInfo.getFirstname()) && contact.getLastname().equals(personInfo.getLastname()) 
+				&& contact.getNickname().equals(personInfo.getNickname()) && contact.getPhoneNumber().equals(personInfo.getPhoneNumber()) ){
+				System.out.println("\nContact successfully edited!\n");
+				return;
+			}
+		}
+		System.out.println("\nSomething went wrong, please try again.\n");
 	}
 	
 	public static void main(String[] args) {

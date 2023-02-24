@@ -101,7 +101,8 @@ public class Person {
 					 + "------------------------\n"
 					 + "Phone number: " + this.phoneNumber + "\n"
 					 + "Address: " + this.address + "\n"
-					 + "Email: "+ this.emailAddress + "\n";
+					 + "Email: "+ this.emailAddress + "\n"
+					 + "------------------------\n";
 		System.out.println(infos);
 	}
 	

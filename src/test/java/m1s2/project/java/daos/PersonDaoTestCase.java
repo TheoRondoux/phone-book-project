@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -64,18 +63,32 @@ public class PersonDaoTestCase {
 		ResultSet resultSet = stmt.executeQuery("SELECT * FROM person WHERE lastname='Polvent' AND firstname='Balthazar'");
 		assertThat(resultSet.next()).isTrue();
 		assertThat(resultSet.getInt("idperson")).isNotNull();
-		Integer id = resultSet.getInt("idperson");
 		assertThat(resultSet.getString("phone_number")).isEqualTo("060102030405");
 		assertThat(resultSet.next()).isFalse();
 		
-		PreparedStatement prepStmt = connection.prepareStatement("DELETE FROM person WHERE idperson = ?");
-		prepStmt.setInt(1, id);
-		prepStmt.executeUpdate();
-		
-		prepStmt.close();
 		resultSet.close();
 		stmt.close();
 		connection.close();
 		
+	}
+	
+	@Test
+	public void shouldEditPerson() throws Exception{
+		//WHEN
+		List<Person> listOfPerson = personDao.listPersons();
+		Person contactToEdit = listOfPerson.get(0);
+		contactToEdit.setLastname("Alvarez");
+		personDao.editPerson(contactToEdit);
+		//THEN
+		Connection connection = DataSourceFactory.getDataSource().getConnection();
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE idperson="+contactToEdit.getId());
+		assertThat(resultSet.next()).isTrue();
+		assertThat(resultSet.getString("lastname")).isEqualTo("Alvarez");
+		assertThat(resultSet.next()).isFalse();
+		
+		resultSet.close();
+		statement.close();
+		connection.close();
 	}
 }
