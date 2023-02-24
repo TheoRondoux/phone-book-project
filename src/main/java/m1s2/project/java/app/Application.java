@@ -390,9 +390,9 @@ public class Application {
 	public static void showEditContactMenu(Person person, PersonDao personDao) {
 		Character choice = null;
 		System.out.println("\n//////////////////////\n//     Edition      //\n//////////////////////\n" + person.getFirstname() + " " + person.getLastname() + "\n");
-		while (choice == null || choice != 'B') {
-			System.out.println("Choose an element to modify:\n[F]irstname\n[L]astname\n[N]ickname\nBirth [D]ate\n[P]hone number\n[A]ddress\n[E]mail address\n\nOr go [B]ack to the list");
-			while (choice == null || (choice != 'F' && choice != 'L' && choice != 'N' && choice != 'D' && choice != 'P' && choice != 'A' && choice != 'E' && choice != 'B') ) {
+		while (choice == null || ( choice != 'B' && choice != 'R' )) {
+			System.out.println("Choose an element to modify:\n[F]irstname\n[L]astname\n[N]ickname\nBirth [D]ate\n[P]hone number\n[A]ddress\n[E]mail address\n[R]emove person\n\nOr go [B]ack to the list");
+			while (choice == null || (choice != 'F' && choice != 'L' && choice != 'N' && choice != 'D' && choice != 'P' && choice != 'A' && choice != 'E' && choice != 'B' && choice != 'R') ) {
 				if (choice != null) {
 					System.out.println("Please enter a valid option.");
 				}
@@ -421,10 +421,13 @@ public class Application {
 				case 'E': 
 					person.setEmailAddress(askForStringInput("Email"));
 					break;
+				case 'R':
+					confirmPersonDeletion(person, personDao);
+					break;
 				case 'B':
 					break;
 			}
-			if (choice != 'B') {
+			if (choice != 'B' && choice != 'R') {
 				personDao.editPerson(person);
 				checkContactEdition(person, personDao);
 				person.displayInfos();
@@ -450,6 +453,41 @@ public class Application {
 			}
 		}
 		System.out.println("\nSomething went wrong, please try again.\n");
+	}
+	
+	/**
+	 * Asks the user to confirm the deletion of a contact. If yes, deletes the contact and checks if the contact has been deleted in the database.
+	 * 
+	 * @param person is the contact to delete
+	 * @param personDao is a DAO
+	 * @return true if the person has been deleted, false in any other case.
+	 * */
+	public static boolean confirmPersonDeletion(Person person, PersonDao personDao) {
+		Character choice = null;
+		System.out.println("Are you sure you want to delete "+person.getFirstname()+" "+person.getLastname()+"? This operation is irreversible.\n[N]o\n[Y]es");
+		while (choice == null || (choice != 'Y' && choice != 'N')) {
+			if (choice != null) {
+				System.out.println("Please select a valid option.");
+			}
+			choice = getOption();
+		}
+		
+		switch(choice) {
+			case 'N':
+				break;
+			case 'Y':
+				personDao.deletePerson(person.getId());
+				List<Person> tempContacts = personDao.listPersons();
+				for (Person tempContact : tempContacts) {
+					if (tempContact.getId().equals(person.getId())) {
+						System.out.println("Something went wrong while deleting the contact, please try again.");
+						return false;
+					}
+				}
+				System.out.println("Successfuly deleted " + person.getFirstname() + " " + person.getLastname()+".");
+				return true;
+		}
+		return false;
 	}
 	
 	public static void main(String[] args) {

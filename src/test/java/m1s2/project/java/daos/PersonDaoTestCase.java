@@ -91,4 +91,19 @@ public class PersonDaoTestCase {
 		statement.close();
 		connection.close();
 	}
+	
+	@Test
+	public void shouldDeletePerson() throws Exception{
+		//WHEN
+		personDao.deletePerson(1);
+		//THEN
+		Connection connection = DataSourceFactory.getDataSource().getConnection();
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE idperson=1");
+		assertThat(resultSet.next()).isFalse();
+		
+		resultSet.close();
+		statement.close();
+		connection.close();
+	}
 }

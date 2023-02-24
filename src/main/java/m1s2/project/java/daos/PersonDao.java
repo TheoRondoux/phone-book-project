@@ -16,7 +16,7 @@ public class PersonDao {
 		List<Person> personsList = new ArrayList<>();
 		try(Connection connection = DataSourceFactory.getDataSource().getConnection()){
 			try (Statement statement = connection.createStatement()){
-				String sqlQuery = "SELECT * FROM person ORDER BY lastname";
+				String sqlQuery = "SELECT * FROM person ORDER BY lastname,firstname";
 				try (ResultSet results = statement.executeQuery(sqlQuery)){
 					while(results.next()) {
 						Person person = new Person(results.getInt("idperson"),
@@ -81,6 +81,19 @@ public class PersonDao {
 				statement.setString(6, person.getEmailAddress());
 				statement.setDate(7, Date.valueOf(person.getBirthDate()));
 				statement.setInt(8, person.getId());
+				statement.executeUpdate();
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deletePerson(Integer idperson) {
+		try(Connection connection = DataSourceFactory.getDataSource().getConnection()){
+			String sqlQuery = "DELETE FROM person WHERE idperson=?";
+			try(PreparedStatement statement = connection.prepareStatement(sqlQuery)){
+				statement.setInt(1, idperson);
 				statement.executeUpdate();
 			}
 		}
