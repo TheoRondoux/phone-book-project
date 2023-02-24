@@ -354,7 +354,12 @@ public class Application {
 		showMainMenu();
 		
 	}
-	
+	/**
+	 * Displays all the information about a contact
+	 * 
+	 * @param person is the contact that we want to know more about
+	 * @param personDao is a DAO
+	 * */
 	public static void showInfoContactMenu(Person person, PersonDao personDao) {
 		System.out.println("\n//////////////////////\n//     Details      //\n//////////////////////");
 		person.displayInfos();
@@ -376,6 +381,12 @@ public class Application {
 		}
 	}
 	
+	/**
+	 * Shows the edition options for a contact and allows the user to modify the elements
+	 * 
+	 * @param person is the contact that we want to modify his information
+	 * @param personDao is a DAO
+	 * */
 	public static void showEditContactMenu(Person person, PersonDao personDao) {
 		Character choice = null;
 		System.out.println("\n//////////////////////\n//     Edition      //\n//////////////////////\n" + person.getFirstname() + " " + person.getLastname() + "\n");
@@ -422,6 +433,12 @@ public class Application {
 		}
 	}
 	
+	/**
+	 * Checks if the modification of the contact has been made on the database
+	 * 
+	 * @param personInfo is the contact edited locally
+	 * @param personDao is a DAO
+	 * */
 	public static void checkContactEdition(Person personInfo, PersonDao personDao) {
 		List<Person> tempContacts = personDao.listPersons();
 		for (Person contact : tempContacts) {
