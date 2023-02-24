@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -30,6 +31,22 @@ public class Application {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Waits for the user to enter a character.
+	 * 
+	 * @return the character if the input length is greater than 1, null in any other case
+	 * */
+	public static Character getOption() {
+		System.out.print("-> ");
+		Scanner keyboard = new Scanner(System.in);
+		String input = keyboard.next();
+		if (input.length() == 1) {
+			return input.charAt(0);
+		}
+		else {
+			return null;
+		}	
+	}
 	
 	/**
 	 * Generates and displays the main menu for the phone book.
@@ -45,12 +62,7 @@ public class Application {
 			if (choice != null) {
 				System.out.println("Please enter a valid option");
 			}
-			System.out.print("-> ");
-			Scanner keyboard = new Scanner(System.in);
-			String input = keyboard.next();
-			if(input.length() == 1) {
-				choice = input.charAt(0);
-			}
+			choice = getOption();
 		}
 		switch(choice) {
 			case 'L': 
@@ -78,22 +90,16 @@ public class Application {
 		String details = "\n//////////////////////\n//     Contacts     //\n//////////////////////\n"
 					   + "Page " + (pageCounter+1) + "/" + numberOfPages;		
 		System.out.println(details);
-		displayContactListPage(contacts, limitPerPage, pageCounter);		
+		List<Person> contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);		
 		while (choice == null || choice != 'B') {
 			choice = null;
 			String options = generatePageOptions(numberOfPages, pageCounter);
 			System.out.println(options);
-			while( choice == null || ( choice != 'B' && choice != '>' && choice != '<' ) ) {
+			while( choice == null || ( choice != 'B' && choice != '>' && choice != '<'  && choice < '1' && choice > (char)contactsOnPage.size()) ) {
 				if (choice != null ) {
 					System.out.println("Please enter a valid option");
 				}
-				System.out.print("-> ");
-				Scanner keyboard = new Scanner(System.in);
-				String input = keyboard.next();
-				
-				if(input.length() == 1) {
-					choice = input.charAt(0);
-				}
+				choice = getOption();
 			}
 			
 			switch(choice) {
@@ -101,17 +107,23 @@ public class Application {
 					if (numberOfPages > 1 && pageCounter == (numberOfPages-1) || numberOfPages > 1 && pageCounter > 0 && pageCounter < (numberOfPages-1)) {
 						pageCounter--;
 						System.out.println("\nPage " + (pageCounter+1) + "/" + numberOfPages);
-						displayContactListPage(contacts, limitPerPage, pageCounter);
+						contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);
 					}
 					break;
 				case '>':
 					if (numberOfPages > 1 && pageCounter == 0 || numberOfPages > 1 && pageCounter > 0 && pageCounter < (numberOfPages-1) ) {
 						pageCounter++;
 						System.out.println("\nPage " + (pageCounter+1) + "/" + numberOfPages);
-						displayContactListPage(contacts, limitPerPage, pageCounter);
+						contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);
 					}
 					break;
 				case 'B':
+					break;
+				default:
+					showInfoContactMenu(contactsOnPage.get((int)choice-49));
+					contacts = personDao.listPersons();
+					System.out.println("\n//////////////////////\n//     Contacts     //\n//////////////////////\n" + "Page " + (pageCounter+1) + "/" + numberOfPages);
+					contactsOnPage = displayContactListPage(contacts, limitPerPage, pageCounter);
 					break;
 			}
 		}
@@ -124,24 +136,34 @@ public class Application {
 	 * @param limitPerPage is the number of contacts to display on each page
 	 * @param pageCounter is the number of the current page
 	 * */
-	public static void displayContactListPage(List<Person> contacts, Integer limitPerPage, Integer pageCounter) {
+	public static List<Person> displayContactListPage(List<Person> contacts, Integer limitPerPage, Integer pageCounter) {
+		List<Person> contactsOnPage = new ArrayList<>();
+		int counter = 0;
 		System.out.println("----------------------");
 		if (contacts.size() <= limitPerPage) {
-			contacts.forEach((person)->System.out.println(person.getLastname() + " " + person.getFirstname()));;
+			contacts.forEach((person)->{
+										System.out.println(person.getLastname() + " " + person.getFirstname());
+										contactsOnPage.add(person);
+									   });
 		}
 		else {
 			if ( contacts.size() <= (pageCounter * limitPerPage + limitPerPage) ) {
 				for (int i = (pageCounter * limitPerPage); i < contacts.size(); i++) {
-					System.out.println(contacts.get(i).getLastname() + " " + contacts.get(i).getFirstname());
+					counter++;
+					System.out.println(counter + " - " + contacts.get(i).getLastname() + " " + contacts.get(i).getFirstname());
+					contactsOnPage.add(contacts.get(i));
 				}
 			}
 			else {
 				for (int i = (pageCounter * limitPerPage); i < (pageCounter * limitPerPage + limitPerPage); i++) {
-					System.out.println(contacts.get(i).getLastname() + " " + contacts.get(i).getFirstname());
+					counter++;
+					System.out.println(counter + " - " + contacts.get(i).getLastname() + " " + contacts.get(i).getFirstname());
+					contactsOnPage.add(contacts.get(i));
 				}
 			}
 		}
 		System.out.println("----------------------");
+		return contactsOnPage;
 	}
 	
 	/**
@@ -316,14 +338,35 @@ public class Application {
 			if (choice != null) {
 				System.out.println("Please enter a valid option");
 			}
-			System.out.print("-> ");
-			String input = keyboard.next();
-			if (input.length() == 1) {
-				choice = input.charAt(0);
-			}
+			choice = getOption();
 		}
 		showMainMenu();
 		
+	}
+	
+	public static void showInfoContactMenu(Person person) {
+		System.out.println("\n//////////////////////\n//     Details      //\n//////////////////////");
+		person.displayInfos();
+		System.out.println("[E]dit\n[B]ack to contacts list");
+		Character choice = null;
+		while ( choice == null || (choice != 'B' && choice != 'E') ) {
+			if (choice != null) {
+				System.out.println("Please select a valid option");
+			}
+			choice = getOption();
+		}
+		
+		switch(choice) {
+			case 'E':
+				showEditContactMenu(person);
+				break;
+			case 'B':
+				break;
+		}
+	}
+	
+	public static void showEditContactMenu(Person person) {
+		System.out.println("Edit");
 	}
 	
 	public static void main(String[] args) {

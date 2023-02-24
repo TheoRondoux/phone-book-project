@@ -94,6 +94,16 @@ public class Person {
 		this.birthDate = birthDate;
 	}
 	
+	public void displayInfos() {
+		String infos = this.firstname + " " + this.lastname + "\n"
+					 + this.nickname + "\n"
+					 + this.birthDate + "\n"
+					 + "------------------------\n"
+					 + "Phone number: " + this.phoneNumber + "\n"
+					 + "Address: " + this.address + "\n"
+					 + "Email: "+ this.emailAddress + "\n";
+		System.out.println(infos);
+	}
 	
 
 }
