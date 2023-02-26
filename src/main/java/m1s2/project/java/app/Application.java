@@ -56,9 +56,10 @@ public class Application {
 		String options = "//////////////////////\n//    Phonebook     //\n//////////////////////\n"
 					   + "\n[L]ist all contacts"
 					   + "\n[A]dd a new person"
-					   + "\n[E]xit";
+					   + "\n[E]port"
+					   + "\n[Q]uit";
 		System.out.println(options);
-		while (choice == null || ( !choice.equals('E') && !choice.equals('L') && !choice.equals('A') ) ) {
+		while (choice == null || ( !choice.equals('E') && !choice.equals('L') && !choice.equals('A') && !choice.equals('Q')) ) {
 			if (choice != null) {
 				System.out.println("Please enter a valid option");
 			}
@@ -72,6 +73,9 @@ public class Application {
 				addContact(new PersonDao());
 				break;
 			case 'E':
+				exportContacts(new PersonDao());
+				break;
+			case 'Q':
 				break;
 		}
 	}
@@ -488,6 +492,13 @@ public class Application {
 				return true;
 		}
 		return false;
+	}
+	
+	public static void exportContacts(PersonDao personDao) {
+		List<Person> contacts = personDao.listPersons();
+		System.out.println(contacts.get(0).generatesVCard());
+		
+		
 	}
 	
 	public static void main(String[] args) {

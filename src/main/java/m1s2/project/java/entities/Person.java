@@ -1,6 +1,7 @@
 package m1s2.project.java.entities;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Person {
 	
@@ -104,6 +105,20 @@ public class Person {
 					 + "Email: "+ this.emailAddress + "\n"
 					 + "------------------------\n";
 		System.out.println(infos);
+	}
+	
+	public String generatesVCard() {
+		String vCard = "BEGIN:VCARD"
+				     + "\nVERSION:4.0"
+				     + "\nN:" + this.lastname + ";" + this.firstname + ";"
+				     + "\nFN:" + this.firstname + " " + this.lastname
+				     + "\nNICKNAME:" + this.nickname
+				     + "\nTEL;TYPE=cell:" + this.phoneNumber
+				     + "\nADR;TYPE=home:;;" + this.address
+				     + "\nEMAIL:" + this.emailAddress
+				     + "\nBDAY:" + this.birthDate.format(DateTimeFormatter.BASIC_ISO_DATE)
+				     + "\nEND:VCARD";
+		return vCard;
 	}
 	
 
