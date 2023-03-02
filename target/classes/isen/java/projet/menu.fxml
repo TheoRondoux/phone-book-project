@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isen.java.projet.controllers.MenuController">
+   <children>
+      <Button id="listDatabaseButton" fx:id="listDatabaseButton" layoutX="22.0" layoutY="42.0" mnemonicParsing="false" onAction="#listDatabase" text="List Database" />
+      <Button id="addPersonButton" fx:id="addPersonButton" layoutX="22.0" layoutY="94.0" mnemonicParsing="false" onAction="#addPerson" text="Add new person" />
+      <Button id="updateEntryButton" fx:id="updateEntryButton" disable="true" layoutX="22.0" layoutY="150.0" mnemonicParsing="false" onAction="#updateEntry" text="Update an entry" />
+      <Button id="deleteEntryButton" fx:id="deleteEntryButton" disable="true" layoutX="22.0" layoutY="200.0" mnemonicParsing="false" onAction="#deleteEntry" text="Delete an entry" />
+      <Button id="backupButton" layoutX="19.0" layoutY="255.0" mnemonicParsing="false" onAction="#createBackup" text="Create backup" />
+      <TableView id="table" fx:id="table" layoutX="231.0" layoutY="42.0" onMouseClicked="#returnPerson" prefHeight="200.0" prefWidth="377.0">
+        <columns>
+          <TableColumn id="firstNameColumn" fx:id="firstNameColumn" prefWidth="75.0" text="First Name" />
+          <TableColumn id="lastNameColumn" fx:id="lastNameColumn" prefWidth="75.0" text="Last Name" />
+          <TableColumn id="emailColumn" fx:id="emailColumn" prefWidth="75.0" text="Email" />
+          <TableColumn id="DateofBirthColumn" fx:id="DateofBirthColumn" prefWidth="75.0" text="Date Of Birth" />
+          <TableColumn id="phoneNumberColumn" fx:id="phoneNumberColumn" prefWidth="75.0" text="Phone Number" />
+        </columns>
+      </TableView>
+      <Text id="currentSelection" fx:id="currentSelection" layoutX="374.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Selection" textAlignment="CENTER" textOrigin="CENTER" AnchorPane.topAnchor="259.0" />
+   </children>
+</AnchorPane>
