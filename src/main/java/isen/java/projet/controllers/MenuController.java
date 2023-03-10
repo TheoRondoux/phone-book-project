@@ -146,11 +146,13 @@ public class MenuController {
     	ObservableList<Person> selectedItems = selectionModel.getSelectedItems();
     	
     	//set selected person as selected row
-    	selectedPerson = selectedItems.get(0);
-    	
-    	//set current selection text and enable update and delete button
-    	this.currentSelection.setText(String.format("Current Selection: %s %s", selectedPerson.getFirstname(), selectedPerson.getLastname()));
-    	editButton.setDisable(false);
+    	if(!selectedItems.isEmpty()) {
+    		selectedPerson = selectedItems.get(0);
+        	
+        	//set current selection text and enable update and delete button
+        	this.currentSelection.setText(String.format("Current Selection: %s %s", selectedPerson.getFirstname(), selectedPerson.getLastname()));
+        	editButton.setDisable(false);
+    	}
     }
     
     //transform a list of people into an observable list for javafx
