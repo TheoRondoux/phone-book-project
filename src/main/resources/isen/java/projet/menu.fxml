@@ -19,6 +19,6 @@
       </TableView>
       <Text id="currentSelection" fx:id="currentSelection" layoutX="374.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Selection" textAlignment="CENTER" textOrigin="CENTER" AnchorPane.topAnchor="259.0" />
       <Button id="exitButton" fx:id="exitButton" layoutX="22.0" layoutY="311.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
-      <Button id="editButton" fx:id="editButton" disable="true" layoutX="24.0" layoutY="142.0" mnemonicParsing="false" onAction="#editPerson" text="Edit an Entry" />
+      <Button id="editButton" fx:id="editButton" disable="true" layoutX="24.0" layoutY="142.0" mnemonicParsing="false" onAction="#editPerson" text="View details" />
    </children>
 </AnchorPane>
