@@ -21,6 +21,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("menu"), 640, 480);
         stage.setScene(scene);
+        stage.setTitle("Phone Book");
         stage.show();
     }
 

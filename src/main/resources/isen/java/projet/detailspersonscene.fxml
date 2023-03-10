@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isen.java.projet.controllers.DetailsPersonSceneController">
+   <children>
+      <TableView id="table" fx:id="table" layoutX="14.0" layoutY="44.0" prefHeight="200.0" prefWidth="582.0">
+         <columns>
+            <TableColumn id="firstNameColumn" fx:id="firstNameColumn" prefWidth="75.0" text="First Name" />
+            <TableColumn id="lastNameColumn" fx:id="lastNameColumn" prefWidth="75.0" text="Last Name" />
+            <TableColumn id="emailColumn" fx:id="emailColumn" prefWidth="124.0" text="Email" />
+            <TableColumn id="DateofBirthColumn" fx:id="DateofBirthColumn" prefWidth="126.0" text="Date Of Birth" />
+            <TableColumn id="phoneNumberColumn" fx:id="phoneNumberColumn" prefWidth="104.0" text="Phone Number" />
+            <TableColumn id="addressColumn" fx:id="addressColumn" prefWidth="75.0" text="Address" />
+         </columns>
+      </TableView>
+      <Button id="updateEntryButton" fx:id="updateEntryButton" layoutX="34.0" layoutY="317.0" mnemonicParsing="false" onAction="#updateEntry" text="Update entry" />
+      <Button id="deleteEntryButton" fx:id="deleteEntryButton" layoutX="168.0" layoutY="317.0" mnemonicParsing="false" onAction="#deleteEntry" text="Delete entry" />
+      <Button id="menuButton" fx:id="menuButton" layoutX="520.0" layoutY="317.0" mnemonicParsing="false" onAction="#returnToMenu" text="Menu" />
+   </children>
+</AnchorPane>

@@ -1,22 +1,14 @@
 package isen.java.projet.controllers;
 
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Properties;
-import static org.junit.Assert.*;
 
 
 import isen.java.projet.App;
@@ -25,6 +17,7 @@ import isen.java.projet.object.Person;
 
 import java.time.LocalDate;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,19 +26,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 
 public class MenuController {
 	
 	private Person selectedPerson;
+	
+	//TABLE RELATED
+	
 	@FXML
 	private TableView<Person> table;
 	
@@ -55,14 +48,7 @@ public class MenuController {
     @FXML
     private TableColumn<Person, String> lastNameColumn;
     
-    @FXML
-    private TableColumn<Person, LocalDate> DateofBirthColumn;
-    
-    @FXML
-    private TableColumn<Person, String> emailColumn;
-    
-    @FXML
-    private TableColumn<Person, String> phoneNumberColumn;
+    //BUTTONS
     
     @FXML
     private Button listDatabaseButton;
@@ -71,10 +57,11 @@ public class MenuController {
     private Button addPersonButton;
     
     @FXML
-    private Button updateEntryButton;
+    private Button exitButton;
     
     @FXML
-    private Button deleteEntryButton;
+    private Button editButton;
+
     
     @FXML
     private Text currentSelection;
@@ -89,9 +76,6 @@ public class MenuController {
     	table.setItems(list);
     	firstNameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("firstname"));
     	lastNameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("lastname"));
-    	DateofBirthColumn.setCellValueFactory(new PropertyValueFactory<Person, LocalDate>("birthDate"));
-    	phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("phoneNumber"));
-    	emailColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("emailAddress"));
     }
     
     //When add person is clicked scene is changed to add person scene"
@@ -100,48 +84,28 @@ public class MenuController {
     private void addPerson() throws IOException {
     	 App.setRoot("addpersonscene");
     }
+  
+    //When edit person is clicked scene, load the detailsscene and set data (selectedPerson) of details controller
     
-    //when update entry is clicked, load update data scene and set properties of the udpatedatascene
     @FXML
-    private void updateEntry(ActionEvent event) throws IOException {
-    	//load scene
-    	FXMLLoader loader = new FXMLLoader(App.class.getResource("updatedatascene.fxml"));
+    void editPerson(ActionEvent event) throws Exception {
+    	
+    	//Load details scene
+    	FXMLLoader loader = new FXMLLoader(App.class.getResource("detailspersonscene.fxml"));
     	Parent root = loader.load();
     	
-    	//create an instance of the update scene controller and use it to call the set id and set TextField of the update data scene
-    	UpdatePersonSceneController controller = loader.getController();
-    	controller.setId(selectedPerson.getId());
-    	controller.setTextField(selectedPerson.getFirstname(), selectedPerson.getLastname(), 
-    			selectedPerson.getNickname(), selectedPerson.getPhoneNumber(), selectedPerson.getAddress(), selectedPerson.getEmailAddress(), selectedPerson.getBirthDate());
-    	
-    	//set selected person to null, and disable the delete and update button
+    	//Create DetailsPersonScene controller to manipulate the scene before it is shown
+    	DetailsPersonSceneController controller = loader.getController();
+    	//set data inside controller
+    	controller.setSelectedPerson(selectedPerson);
+    	controller.setPersonID(selectedPerson.getId());
+    	//show the selection in the table
+    	controller.listSelection();
+    	//set selected person to null and disable edit button
     	this.selectedPerson = null;
-    	deleteEntryButton.setDisable(true);
-    	updateEntryButton.setDisable(true);
-    	
-    	//change the scene
+    	editButton.setDisable(true);
+    	//change scene to detailspersonscene
     	App.setRoot(root);
-    }
-    
-    //when delete is clicked, create a popup window for user to confirm deletion, delete the current selection
-    @FXML
-    private void deleteEntry() throws IOException {
-    	//create alert
-    	Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setTitle("Delete entry");
-    	alert.setHeaderText("This will permanently remove the user from the database are you sure?");
-    	
-    	//if alert answer is ok delete selection and reload the table view
-    	if(alert.showAndWait().get() == ButtonType.OK) {
-    		personDao.deletePerson(selectedPerson.getId());
-    		this.listDatabase();
-    	}
-    	
-    	//set selection to null, disable delete/update button, and set selection text
-    	this.selectedPerson = null;
-    	deleteEntryButton.setDisable(true);
-    	updateEntryButton.setDisable(true);
-    	this.currentSelection.setText("Current Selection: nothing");
     }
     
     //export a VCF form of each contacts
@@ -186,8 +150,7 @@ public class MenuController {
     	
     	//set current selection text and enable update and delete button
     	this.currentSelection.setText(String.format("Current Selection: %s %s", selectedPerson.getFirstname(), selectedPerson.getLastname()));
-    	updateEntryButton.setDisable(false);
-    	deleteEntryButton.setDisable(false);
+    	editButton.setDisable(false);
     }
     
     //transform a list of people into an observable list for javafx
@@ -209,6 +172,11 @@ public class MenuController {
         	bufferedWriter.flush();
     	}
     	
+    }
+    
+    @FXML
+    void exit(ActionEvent event) {
+    	Platform.exit();
     }
 
 
