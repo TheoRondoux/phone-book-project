@@ -1,0 +1,28 @@
+.default-button{
+	-fx-background-color: #FFF;
+	-fx-font-size: 15px;
+	-fx-background-radius: 25px;
+	-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 1.0, 0.0);
+}
+
+.default-button:hover{
+	-fx-background-color: #383d72;
+	-fx-text-fill: #FFF;
+}
+
+.default-button:active{
+	-fx-background-color:#5a60a6;
+}
+
+.red-hover-button:hover{
+	-fx-background-color: #9c2828;
+}
+
+.normal-text{
+	-fx-font-size: 15px;
+}
+
+.table-view{
+	-fx-selection-bar: #383d72;
+	-fx-border:none;
+}

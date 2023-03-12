@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isen.java.projet.controllers.UpdatePersonSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isen.java.projet.controllers.UpdatePersonSceneController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="40.0" layoutY="51.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -23,58 +23,58 @@
                </VBox.margin>
             </Text>
             <Text id="errorText" fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Error" visible="false" />
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="275.0">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
                <children>
                   <TextField id="firstname" fx:id="firstname" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="enter first name" StackPane.alignment="CENTER_RIGHT">
                      <StackPane.margin>
                         <Insets />
                      </StackPane.margin>
                   </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First name*" StackPane.alignment="CENTER_LEFT">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="First name*" StackPane.alignment="CENTER_LEFT">
                      <StackPane.margin>
                         <Insets />
                      </StackPane.margin>
                   </Text>
                </children>
             </StackPane>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="275.0">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last name*" StackPane.alignment="CENTER_LEFT" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="Last name*" StackPane.alignment="CENTER_LEFT" />
                   <TextField id="lastname" fx:id="lastname" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="enter last name" StackPane.alignment="CENTER_RIGHT" />
                </children>
             </StackPane>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="275.0">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nickname" StackPane.alignment="CENTER_LEFT" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="Nickname" StackPane.alignment="CENTER_LEFT" />
                   <TextField id="nickname" fx:id="nickname" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="enter nickname" StackPane.alignment="CENTER_RIGHT" />
                </children>
             </StackPane>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="275.0">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" StackPane.alignment="CENTER_LEFT" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="Phone Number" StackPane.alignment="CENTER_LEFT" />
                   <TextField id="phonenumber" fx:id="phoneNumber" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="enter phone number" StackPane.alignment="CENTER_RIGHT" />
                </children>
             </StackPane>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="275.0">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address" StackPane.alignment="CENTER_LEFT" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="Address" StackPane.alignment="CENTER_LEFT" />
                   <TextField id="address" fx:id="address" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="enter address" StackPane.alignment="CENTER_RIGHT" />
                </children>
             </StackPane>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="275.0">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" StackPane.alignment="CENTER_LEFT" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="Email" StackPane.alignment="CENTER_LEFT" />
                   <TextField id="email" fx:id="email" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="enter email" StackPane.alignment="CENTER_RIGHT" />
                </children>
             </StackPane>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="298.0">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Birthdate*" StackPane.alignment="CENTER_LEFT" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="Birthdate*" StackPane.alignment="CENTER_LEFT" />
                   <DatePicker id="birthdate" fx:id="birthdate" editable="false" StackPane.alignment="CENTER_RIGHT" />
                </children>
             </StackPane>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fields marked with * are required" />
-            <Button id="updateData" fx:id="updateData" mnemonicParsing="false" onAction="#updateData" text="Update" />
+            <Button id="updateData" fx:id="updateData" mnemonicParsing="false" onAction="#updateData" styleClass="default-button" text="Update" />
             <Text id="personUpdated" fx:id="personUpdated" fill="#1ba12f" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact sucessfully updated!" visible="false">
                <font>
                   <Font size="18.0" />
@@ -82,6 +82,6 @@
             </Text>
          </children>
       </VBox>
-      <Button id="menu" fx:id="menu" mnemonicParsing="false" onAction="#returnToMenu" text="Menu" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
+      <Button id="menu" fx:id="menu" mnemonicParsing="false" onAction="#returnToMenu" styleClass="default-button" text="Menu" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
    </children>
 </AnchorPane>
