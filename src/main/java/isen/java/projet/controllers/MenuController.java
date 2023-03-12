@@ -15,8 +15,6 @@ import isen.java.projet.App;
 import isen.java.projet.daos.PersonDao;
 import isen.java.projet.object.Person;
 
-import java.time.LocalDate;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,8 +48,8 @@ public class MenuController {
     
     //BUTTONS
     
-    @FXML
-    private Button listDatabaseButton;
+//    @FXML
+//    private Button listDatabaseButton;
     
     @FXML
     private Button addPersonButton;
@@ -141,7 +139,7 @@ public class MenuController {
     @FXML
     void returnPerson(MouseEvent event) {
     	//set selection mode to only be able to select 1 row at a time
-    	TableViewSelectionModel selectionModel = table.getSelectionModel();
+    	TableViewSelectionModel<Person> selectionModel = table.getSelectionModel();
     	selectionModel.setSelectionMode(SelectionMode.SINGLE);
     	ObservableList<Person> selectedItems = selectionModel.getSelectedItems();
     	

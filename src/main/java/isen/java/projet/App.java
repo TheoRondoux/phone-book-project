@@ -22,6 +22,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("menu"), 640, 480);
         stage.setScene(scene);
         stage.setTitle("Phone Book");
+        stage.setMinWidth(640);
+        stage.setMinHeight(480);
         stage.show();
     }
 

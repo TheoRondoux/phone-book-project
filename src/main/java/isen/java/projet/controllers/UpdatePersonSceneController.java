@@ -1,9 +1,5 @@
 package isen.java.projet.controllers;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.time.LocalDate;
 
 import isen.java.projet.App;
@@ -52,11 +48,15 @@ public class UpdatePersonSceneController {
 	    @FXML
 	    private Text personUpdated;
 	    
+	    @FXML
+	    private Text errorText;
+	    
 	    private FadeTransition fade = new FadeTransition();
 	    
 	    //create new person object, set its values to the textfields and call it editperson from personDao
 	    @FXML
 	    void updateData(ActionEvent event) {
+	    	errorText.setVisible(false);
 	    	PersonDao personDao = new PersonDao();
 	    	Person person = new Person();
 	    	person.setId(this.id);
@@ -67,8 +67,23 @@ public class UpdatePersonSceneController {
 			person.setBirthDate(this.birthdate.getValue());
 			person.setPhoneNumber(this.phonenumber.getText());
 			person.setNickname(this.nickname.getText());
-	    	personDao.editPerson(person);
-	    	playFade();
+			
+			if (person.getFirstname().equals("") || person.getFirstname() == null) {
+				errorText.setText("Please enter a firstname");
+				errorText.setVisible(true);
+			}
+			else if (person.getLastname().equals("") || person.getLastname() == null) {
+				errorText.setText("Please enter a lastname");
+				errorText.setVisible(true);
+			}
+			else if (person.getBirthDate() == null) {
+				errorText.setText("Please enter a birthdate");
+				errorText.setVisible(true);
+			}
+			else {
+		    	personDao.editPerson(person);
+		    	playFade();
+			}
 	    	
 	    }
 

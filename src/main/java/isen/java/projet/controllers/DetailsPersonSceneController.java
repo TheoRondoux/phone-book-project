@@ -1,7 +1,5 @@
 package isen.java.projet.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,52 +7,39 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import isen.java.projet.App;
 import isen.java.projet.daos.PersonDao;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import isen.java.projet.object.Person;
 
 public class DetailsPersonSceneController {
 	
 	//PERSON DAO
-	
 	private PersonDao personDao = new PersonDao();
 	
-	//TABLE RELATED
-	
+	//Information related to the different texts	
 	private Person selectedPerson;
 	private int personID;
-	private List<Person> personsList = new ArrayList<>();
 	
 	@FXML
-    private TableColumn<Person, LocalDate> DateofBirthColumn;
-
-    @FXML
-    private TableColumn<Person, String> emailColumn;
-
-    @FXML
-    private TableColumn<Person, String> firstNameColumn;
-
-    @FXML
-    private TableColumn<Person, String> lastNameColumn;
-
-    @FXML
-    private TableColumn<Person, String> phoneNumberColumn;
-    
-    @FXML
-    private TableColumn<Person, String> addressColumn;
-
-    @FXML
-    private TableView<Person> table;
+	private Text firstnameLastnameText;
+	
+	@FXML
+	private Text nicknameText;
+	
+	@FXML
+	private Text birthdateText;
+	
+	@FXML
+	private Text addressText;
+	
+	@FXML
+	private Text phoneNumberText;
+	
+	@FXML
+	private Text emailText;
 
     
     //BUTTONS 
@@ -67,16 +52,14 @@ public class DetailsPersonSceneController {
     @FXML
     private Button deleteEntryButton;
     
+    @FXML
     public void listSelection() throws IOException {
-    	personsList.add(selectedPerson);
-    	ObservableList<Person> list = FXCollections.observableArrayList(personsList);
-    	table.setItems(list);
-    	firstNameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("firstname"));
-    	lastNameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("lastname"));
-    	DateofBirthColumn.setCellValueFactory(new PropertyValueFactory<Person, LocalDate>("birthDate"));
-    	phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("phoneNumber"));
-    	emailColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("emailAddress"));
-    	addressColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("address"));
+    	this.firstnameLastnameText.setText(String.format("%s %s", selectedPerson.getFirstname(), selectedPerson.getLastname()));
+    	this.birthdateText.setText(String.valueOf(selectedPerson.getBirthDate()));
+    	this.nicknameText.setText(selectedPerson.getNickname());
+    	this.addressText.setText(selectedPerson.getAddress());
+    	this.emailText.setText(selectedPerson.getEmailAddress());
+    	this.phoneNumberText.setText(selectedPerson.getPhoneNumber());
     }
 
     //when delete is clicked, create a popup window for user to confirm deletion, delete the current selection

@@ -1,12 +1,7 @@
 package isen.java.projet.controllers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-
 import isen.java.projet.App;
-import isen.java.projet.daos.DataSourceFactory;
 import isen.java.projet.daos.PersonDao;
 import isen.java.projet.object.Person;
 import javafx.scene.control.TextField;
@@ -50,12 +45,15 @@ public class AddPersonSceneController {
     @FXML
     private Text personAdded;
     
+    @FXML
+    private Text errorText;
+    
     private FadeTransition fade = new FadeTransition();
 	
 	//when add person is clicked create a new object person, set its properties according to the Textfields, and call add person to the database
 	@FXML
     void addData(ActionEvent event) {
-		
+		errorText.setVisible(false);
 		//create person
 		PersonDao personDao = new PersonDao();
 		Person person = new Person();
@@ -67,11 +65,24 @@ public class AddPersonSceneController {
 		person.setPhoneNumber(this.phonenumber.getText());
 		person.setNickname(this.nickname.getText());
 		
-		//add person
-		personDao.addPerson(person);
-		
-		//fade in and out a text to show to user that a person has been added
-		playFade();
+		if (person.getFirstname().equals("") || person.getFirstname() == null) {
+			errorText.setText("Please enter a firstname");
+			errorText.setVisible(true);
+		}
+		else if (person.getLastname().equals("") || person.getLastname() == null) {
+			errorText.setText("Please enter a lastname");
+			errorText.setVisible(true);
+		}
+		else if (person.getBirthDate() == null) {
+			errorText.setText("Please enter a birthdate");
+			errorText.setVisible(true);
+		}
+		else {
+			//add person
+			personDao.addPerson(person);
+			//fade in and out a text to show to user that a person has been added
+			playFade();
+		}
     }
 
 	//return to the menu when menu button clicked
@@ -89,7 +100,7 @@ public class AddPersonSceneController {
 		//fade properties
 		fade.setDuration(Duration.millis(2000));
 		fade.setFromValue(10);  
-        fade.setToValue(0.1);
+        fade.setToValue(0);
 		this.fade.play();
 		
     }
