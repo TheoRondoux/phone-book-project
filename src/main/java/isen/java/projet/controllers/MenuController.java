@@ -14,7 +14,7 @@ import java.util.List;
 import isen.java.projet.App;
 import isen.java.projet.daos.PersonDao;
 import isen.java.projet.object.Person;
-
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -63,6 +64,11 @@ public class MenuController {
     
     @FXML
     private Text currentSelection;
+    
+    @FXML
+    private Text exportedText;
+    
+    private FadeTransition fade = new FadeTransition();
     
     private PersonDao personDao = new PersonDao();
     
@@ -125,9 +131,15 @@ public class MenuController {
     	list.forEach((person) -> {
     		try {
 				this.writeBackup(newDirectory.getAbsolutePath(), 
-						String.format("%s-%s.vcf", person.getLastname(), person.getFirstname()),
+						String.format("%s-%s.vcf", person.getLastname().toLowerCase(), person.getFirstname().toLowerCase()),
 						person.generatesVCard());
+				exportedText.setText("Exported in contact_backup folder!");
+				exportedText.setStyle("-fx-text-fill: #1ba12f;");
+				playFade();
 			} catch (IOException e) {
+				exportedText.setText("Error during export.");
+				exportedText.setStyle("-fx-text-fill: #FF0000;");
+				playFade();
 				e.printStackTrace();
 			}
     		
@@ -177,6 +189,20 @@ public class MenuController {
     @FXML
     void exit(ActionEvent event) {
     	Platform.exit();
+    }
+    
+    //animation properties for the fade
+    void playFade() {
+    	this.exportedText.setVisible(true);
+    	//set the node that the fade will be related to
+		this.fade.setNode(exportedText);
+		
+		//fade properties
+		fade.setDuration(Duration.millis(2000));
+		fade.setFromValue(10);  
+        fade.setToValue(0);
+		this.fade.play();
+		
     }
 
 

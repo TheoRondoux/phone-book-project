@@ -71,7 +71,7 @@
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="298.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Birthdate*" StackPane.alignment="CENTER_LEFT" />
-                  <DatePicker id="birthdate" fx:id="birthdate" StackPane.alignment="CENTER_RIGHT" />
+                  <DatePicker id="birthdate" fx:id="birthdate" editable="false" StackPane.alignment="CENTER_RIGHT" />
                </children>
             </StackPane>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fields marked with * are required" />
