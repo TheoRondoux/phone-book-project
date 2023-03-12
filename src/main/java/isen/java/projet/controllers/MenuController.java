@@ -14,7 +14,7 @@ import java.util.List;
 import isen.java.projet.App;
 import isen.java.projet.daos.PersonDao;
 import isen.java.projet.object.Person;
-
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,11 +47,7 @@ public class MenuController {
     @FXML
     private TableColumn<Person, String> lastNameColumn;
     
-    //BUTTONS
-    
-//    @FXML
-//    private Button listDatabaseButton;
-    
+    //BUTTONS    
     @FXML
     private Button addPersonButton;
     
@@ -59,15 +56,21 @@ public class MenuController {
     
     @FXML
     private Button editButton;
-
     
+    //TEXTS
     @FXML
     private Text currentSelection;
     
+    @FXML
+    private Text exportedText;
+    
+    private FadeTransition fade = new FadeTransition();
+    
     private PersonDao personDao = new PersonDao();
     
-	//get the database as a list and set it to the tableview
-    //set each columns to have value according to a property from the object
+	/**
+	 * Get the database as a list and set it to the tableview. Set each columns to have value according to a property from the object.
+	 * */
     @FXML	
     private void listDatabase() throws IOException {
     	ObservableList<Person> list = this.getPeople();
@@ -76,15 +79,18 @@ public class MenuController {
     	lastNameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("lastname"));
     }
     
-    //When add person is clicked scene is changed to add person scene"
-    
+    /**
+     * When add person is clicked, the scene is changed to "add person" one.
+     * */    
     @FXML
     private void addPerson() throws IOException {
     	 App.setRoot("addpersonscene");
     }
   
-    //When edit person is clicked scene, load the detailsscene and set data (selectedPerson) of details controller
     
+    /**
+     * When edit person is clicked scene, load the detailsScene and set data (selectedPerson) of details controller.
+     * */
     @FXML
     void editPerson(ActionEvent event) throws Exception {
     	
@@ -106,7 +112,9 @@ public class MenuController {
     	App.setRoot(root);
     }
     
-    //export a VCF form of each contacts
+    /**
+     * export a VCF file of each contact in the database
+     * */
     @FXML
     private void createBackup() throws IOException {
     	
@@ -125,9 +133,15 @@ public class MenuController {
     	list.forEach((person) -> {
     		try {
 				this.writeBackup(newDirectory.getAbsolutePath(), 
-						String.format("%s-%s.vcf", person.getLastname(), person.getFirstname()),
+						String.format("%s-%s.vcf", person.getLastname().toLowerCase(), person.getFirstname().toLowerCase()),
 						person.generatesVCard());
+				exportedText.setText("Exported in contact_backup folder!");
+				exportedText.setStyle("-fx-text-fill: #1ba12f;");
+				playFade();
 			} catch (IOException e) {
+				exportedText.setText("Error during export.");
+				exportedText.setStyle("-fx-text-fill: #FF0000;");
+				playFade();
 				e.printStackTrace();
 			}
     		
@@ -135,7 +149,9 @@ public class MenuController {
     	
     }
     
-    //when a row in the tableview is clicked return the selected row
+    /**
+     * When a row in the tableView is clicked return the selected row.
+     * */
     @FXML
     void returnPerson(MouseEvent event) {
     	//set selection mode to only be able to select 1 row at a time
@@ -153,7 +169,9 @@ public class MenuController {
     	}
     }
     
-    //transform a list of people into an observable list for javafx
+    /**
+     * Transforms a list of people into an observable list for javafx
+     * */
     private ObservableList<Person> getPeople() throws IOException{
         ObservableList<Person> list = FXCollections.observableArrayList(personDao.listPersons());
     	return list;
@@ -165,7 +183,13 @@ public class MenuController {
     	this.listDatabase();
     }
     
-    //function to writeBackup
+    /**
+     * Function to generate à vCard file for a contact
+     * 
+     * @param backupPath is the path where the file will be created
+     * @param filename is the name of the file
+     * @param vCard is a string that contains the content of the file
+     * */
     public void writeBackup(String backupPath, String filename, String vCard) throws IOException {
     	try (BufferedWriter bufferedWriter = Files.newBufferedWriter(Paths.get(backupPath, filename), StandardCharsets.UTF_8)){
     		bufferedWriter.write(vCard);
@@ -177,6 +201,20 @@ public class MenuController {
     @FXML
     void exit(ActionEvent event) {
     	Platform.exit();
+    }
+    
+    //animation properties for the fade
+    void playFade() {
+    	this.exportedText.setVisible(true);
+    	//set the node that the fade will be related to
+		this.fade.setNode(exportedText);
+		
+		//fade properties
+		fade.setDuration(Duration.millis(2000));
+		fade.setFromValue(10);  
+        fade.setToValue(0);
+		this.fade.play();
+		
     }
 
 

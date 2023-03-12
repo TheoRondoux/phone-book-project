@@ -52,6 +52,9 @@ public class DetailsPersonSceneController {
     @FXML
     private Button deleteEntryButton;
     
+    /**
+     * Displays all the information about the selected contact.
+     * */
     @FXML
     public void listSelection() throws IOException {
     	this.firstnameLastnameText.setText(String.format("%s %s", selectedPerson.getFirstname(), selectedPerson.getLastname()));
@@ -62,7 +65,9 @@ public class DetailsPersonSceneController {
     	this.phoneNumberText.setText(selectedPerson.getPhoneNumber());
     }
 
-    //when delete is clicked, create a popup window for user to confirm deletion, delete the current selection
+    /**
+     * When delete is clicked, create a popup window for user to confirm deletion, delete the current selection.
+     * */
     @FXML
     void deleteEntry(ActionEvent event) throws Exception {
     	//create alert
@@ -80,7 +85,7 @@ public class DetailsPersonSceneController {
     	
     }
     
-    //when update entry is clicked, load update data scene and set properties of the udpatedatascene
+    /**When update entry is clicked, load update data scene and set properties of the udpatedatascene*/
     @FXML
     void updateEntry(ActionEvent event) throws Exception {
     	//load scene

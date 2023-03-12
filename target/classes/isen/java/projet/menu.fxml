@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -47,7 +48,20 @@
             </StackPane>
          </children>
       </StackPane>
-      <Button id="backupButton" layoutX="505.0" layoutY="362.0" mnemonicParsing="false" onAction="#createBackup" text="Export contacts" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <VBox layoutX="-0.0380859375" layoutY="-12.06689453125" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <children>
+            <StackPane>
+               <children>
+                  <Text id="exportedText" fx:id="exportedText" strokeType="OUTSIDE" strokeWidth="0.0" text="Exported in contact_backup folder!" visible="false"/>
+               </children>
+            </StackPane>
+            <StackPane alignment="CENTER_RIGHT">
+               <children>
+                  <Button id="backupButton" mnemonicParsing="false" onAction="#createBackup" text="Export contacts" />
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
       <Button id="exitButton" fx:id="exitButton" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#exit" text="Exit" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
    </children>
 </AnchorPane>

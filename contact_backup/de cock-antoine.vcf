@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:4.0
+N:De Cock;Antoine;
+FN:Antoine De Cock
+NICKNAME:
+TEL;TYPE=cell:0601020304
+ADR;TYPE=home:;;Lille
+EMAIL:antoine.decock@student.junia.com
+BDAY:19000101
+END:VCARD

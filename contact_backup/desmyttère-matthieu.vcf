@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:4.0
+N:Desmyttère;Matthieu;
+FN:Matthieu Desmyttère
+NICKNAME:
+TEL;TYPE=cell:0601020304
+ADR;TYPE=home:;;Lille
+EMAIL:matthieu.desmyttere@student.junia.com
+BDAY:19000101
+END:VCARD
