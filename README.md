@@ -22,6 +22,6 @@ You must have Java 17 or later, and an IDE that can import Maven projects.
 See `LICENSE.md`.
 
 ## Contact
-- Antoine De Cock: [@LinkedIn]()
-- Matthieu Desmyttere: [@LinkedIn]()
-- Théo Rondoux: [@LinkedIn]()
+- Antoine De Cock: [@LinkedIn](https://www.linkedin.com/in/antoine-de-cock-932719263/)
+- Matthieu Desmyttere: [@LinkedIn](https://www.linkedin.com/in/matthieu-desmyttere-967a01241/)
+- Théo Rondoux: [@LinkedIn](https://www.linkedin.com/in/theo-rondoux-948ba720a/)
