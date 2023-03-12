@@ -52,7 +52,7 @@
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="275.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" StackPane.alignment="CENTER_LEFT" />
-                  <TextField id="phonenumber" fx:id="phonenumber" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="enter phone number" StackPane.alignment="CENTER_RIGHT" />
+                  <TextField id="phonenumber" fx:id="phoneNumber" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" promptText="enter phone number" StackPane.alignment="CENTER_RIGHT" />
                </children>
             </StackPane>
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="275.0">
