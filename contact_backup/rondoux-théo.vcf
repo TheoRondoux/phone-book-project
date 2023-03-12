@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:4.0
+N:Rondoux;Théo;
+FN:Théo Rondoux
+NICKNAME:Thayo
+TEL;TYPE=cell:0601020304
+ADR;TYPE=home:;;Lille
+EMAIL:theo.rondoux@student.junia.com
+BDAY:19000101
+END:VCARD
