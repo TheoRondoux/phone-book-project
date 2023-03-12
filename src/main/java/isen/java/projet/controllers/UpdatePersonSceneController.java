@@ -37,7 +37,7 @@ public class UpdatePersonSceneController {
 	    private TextField nickname;
 
 	    @FXML
-	    private TextField phonenumber;
+	    private TextField phoneNumber;
 
 	    @FXML
 	    private Button menu;
@@ -53,7 +53,9 @@ public class UpdatePersonSceneController {
 	    
 	    private FadeTransition fade = new FadeTransition();
 	    
-	    //create new person object, set its values to the textfields and call it editperson from personDao
+	    /**
+	     * Create new person object, set its values to the textfields and call it editperson from personDao.
+	     * */
 	    @FXML
 	    void updateData(ActionEvent event) {
 	    	errorText.setVisible(false);
@@ -65,7 +67,7 @@ public class UpdatePersonSceneController {
 			person.setAddress(this.address.getText());
 			person.setEmailAddress(this.email.getText());
 			person.setBirthDate(this.birthdate.getValue());
-			person.setPhoneNumber(this.phonenumber.getText());
+			person.setPhoneNumber(this.phoneNumber.getText());
 			person.setNickname(this.nickname.getText());
 			
 			if (person.getFirstname().equals("") || person.getFirstname() == null) {
@@ -97,7 +99,7 @@ public class UpdatePersonSceneController {
 	    	this.firstname.setText(firstname);
 	    	this.lastname.setText(lastname);
 	    	this.nickname.setText(nickname);
-	    	this.phonenumber.setText(phoneNumber);
+	    	this.phoneNumber.setText(phoneNumber);
 	    	this.address.setText(address);
 	    	this.email.setText(email);
 	    	this.birthdate.setValue(birthDate);

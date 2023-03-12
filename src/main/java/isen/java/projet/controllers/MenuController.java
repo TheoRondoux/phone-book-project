@@ -47,11 +47,7 @@ public class MenuController {
     @FXML
     private TableColumn<Person, String> lastNameColumn;
     
-    //BUTTONS
-    
-//    @FXML
-//    private Button listDatabaseButton;
-    
+    //BUTTONS    
     @FXML
     private Button addPersonButton;
     
@@ -60,8 +56,8 @@ public class MenuController {
     
     @FXML
     private Button editButton;
-
     
+    //TEXTS
     @FXML
     private Text currentSelection;
     
@@ -72,8 +68,9 @@ public class MenuController {
     
     private PersonDao personDao = new PersonDao();
     
-	//get the database as a list and set it to the tableview
-    //set each columns to have value according to a property from the object
+	/**
+	 * Get the database as a list and set it to the tableview. Set each columns to have value according to a property from the object.
+	 * */
     @FXML	
     private void listDatabase() throws IOException {
     	ObservableList<Person> list = this.getPeople();
@@ -82,15 +79,18 @@ public class MenuController {
     	lastNameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("lastname"));
     }
     
-    //When add person is clicked scene is changed to add person scene"
-    
+    /**
+     * When add person is clicked, the scene is changed to "add person" one.
+     * */    
     @FXML
     private void addPerson() throws IOException {
     	 App.setRoot("addpersonscene");
     }
   
-    //When edit person is clicked scene, load the detailsscene and set data (selectedPerson) of details controller
     
+    /**
+     * When edit person is clicked scene, load the detailsScene and set data (selectedPerson) of details controller.
+     * */
     @FXML
     void editPerson(ActionEvent event) throws Exception {
     	
@@ -112,7 +112,9 @@ public class MenuController {
     	App.setRoot(root);
     }
     
-    //export a VCF form of each contacts
+    /**
+     * export a VCF file of each contact in the database
+     * */
     @FXML
     private void createBackup() throws IOException {
     	
@@ -147,7 +149,9 @@ public class MenuController {
     	
     }
     
-    //when a row in the tableview is clicked return the selected row
+    /**
+     * When a row in the tableView is clicked return the selected row.
+     * */
     @FXML
     void returnPerson(MouseEvent event) {
     	//set selection mode to only be able to select 1 row at a time
@@ -165,7 +169,9 @@ public class MenuController {
     	}
     }
     
-    //transform a list of people into an observable list for javafx
+    /**
+     * Transforms a list of people into an observable list for javafx
+     * */
     private ObservableList<Person> getPeople() throws IOException{
         ObservableList<Person> list = FXCollections.observableArrayList(personDao.listPersons());
     	return list;
@@ -177,7 +183,13 @@ public class MenuController {
     	this.listDatabase();
     }
     
-    //function to writeBackup
+    /**
+     * Function to generate à vCard file for a contact
+     * 
+     * @param backupPath is the path where the file will be created
+     * @param filename is the name of the file
+     * @param vCard is a string that contains the content of the file
+     * */
     public void writeBackup(String backupPath, String filename, String vCard) throws IOException {
     	try (BufferedWriter bufferedWriter = Files.newBufferedWriter(Paths.get(backupPath, filename), StandardCharsets.UTF_8)){
     		bufferedWriter.write(vCard);

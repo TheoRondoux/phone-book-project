@@ -50,7 +50,9 @@ public class AddPersonSceneController {
     
     private FadeTransition fade = new FadeTransition();
 	
-	//when add person is clicked create a new object person, set its properties according to the Textfields, and call add person to the database
+	/**
+	 * When add person is clicked create a new object person, set its properties according to the Textfields, and call add person to the database.
+	 * */
 	@FXML
     void addData(ActionEvent event) {
 		errorText.setVisible(false);
@@ -85,13 +87,17 @@ public class AddPersonSceneController {
 		}
     }
 
-	//return to the menu when menu button clicked
+	/**
+	 * Return to the menu when menu button is clicked.
+	 * */
     @FXML
     void returnToMenu(ActionEvent event) throws IOException {
     	App.setRoot("menu");
     }
     
-    //animation properties for the fade
+    /**
+     * Plays a animation for the personAdded text
+     * */
     void playFade() {
     	this.personAdded.setVisible(true);
     	//set the node that the fade will be related to

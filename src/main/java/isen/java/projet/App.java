@@ -40,10 +40,12 @@ public class App extends Application {
         return fxmlLoader.load();
     }
     
+    /**
+     * Checks if the database with all the necessary tables exists. If not, it creates all the necessary files.
+     * */
     public static void initDatabase() throws Exception {
     	Connection connection = DataSourceFactory.getDataSource().getConnection();
 		Statement stmt = connection.createStatement();
-		//stmt.executeUpdate("DROP TABLE people");
 		stmt.executeUpdate("CREATE TABLE IF NOT EXISTS person (\r\n"
 				+ "  idperson INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\r\n" + "  lastname VARCHAR(45) NOT NULL,\r\n"
 				+ "  firstname VARCHAR(45) NOT NULL,\r\n" + "  nickname VARCHAR(45) NOT NULL,\r\n" + "  phone_number VARCHAR(15) NULL,\r\n"
